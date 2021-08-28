@@ -1,0 +1,116 @@
+backend:
+  name: test-repo
+
+# Comment below to disable drafts
+publish_mode: editorial_workflow
+
+media_folder: "static/" # Media files will be stored in the repo under images/uploads
+## logo_url: /static/mf-ico.svg
+
+
+collections:
+
+  - label: "Global Settings"
+    name: "options"
+    files:
+      - label: "Navigation"
+        name: "navigation"
+        file: "_data/nav.json"
+        fields:
+          - { label: "Image", name: "navImg", widget: "image" }
+          - { label: "Button", name: "button", widget: "string" }
+      - label: "Footer"
+        name: "footer"
+        file: "_data/footer.json"
+        fields:
+          - { label: "Footer Logo", name: "footerImg", widget: "image" }
+          - { label: "Column One Heading", name: "colOneHeading", widget: "string" }
+          - label: "Column One Links"
+            label_singular: "Link"
+            name: "columnOne"
+            widget: list
+            fields:
+              - {label: "Display Text", name: "displayText", widget: string}
+              - {label: URL, name: "url", widget: string}
+          - { label: "Column Two Heading", name: "colTwoHeading", widget: "string" }
+          - label: "Column Two Links"
+            label_singular: "Link"
+            name: "columnTwo"
+            widget: list
+            fields:
+              - {label: "Display Text", name: "displayText", widget: string}
+              - {label: URL, name: "url", widget: string}
+          - { label: "Column Three Heading", name: "colThreeHeading", widget: "string" }
+          - label: "Column Three Links"
+            label_singular: "Link"
+            name: "columnThree"
+            widget: list
+            fields:
+              - {label: "Display Text", name: "displayText", widget: string}
+              - {label: URL, name: "url", widget: string}
+      - label: "Subscription Form"
+        name: "subscriptionForm"
+        file: "_data/subscriptionform.json"
+        fields:
+          - { label: "Caption", name: "caption", widget: "string" }
+          - { label: "Input Placeholder", name: "inputPlaceholder", widget: "string" }
+          - { label: "Button Text", name: "button", widget: "string" }
+      - label: "Contact Form"
+        name: "contactform"
+        file: "_data/contactform.json"
+        fields:
+          - { label: "Caption", name: "caption", widget: "string" }
+          - { label: "Input Placeholder", name: "inputPlaceholder", widget: "string" }
+          - { label: "Button Text", name: "button", widget: "string" }
+
+
+  # Our blog posts
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Posts" # Used in the UI
+    label_singular: "Post"
+    folder: "posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string", default: "Anonymous" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["post"] }
+      - { label: "Body", name: "body", widget: "markdown" }
+      
+  # Our pages e.g. About
+  - name: "pages"
+    label: "Pages"
+    label_singular: "Page"
+    folder: "pages"
+    create: true # Change to true to allow editors to create new pages
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Permalink", name: "permalink", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+      - label: 'Home Section'
+        name: 'chunks'
+        widget: 'list'
+        types:
+          - label: 'Carousel'
+            name: 'carousel'
+            widget: object
+            summary: '{{fields.header}}'
+            fields:
+              - { label: Header, name: header, widget: string, default: 'Image Gallery' }
+              - { label: Template, name: template, widget: string, default: 'carousel.html' }
+              - label: Images
+                name: images
+                widget: list
+                field: { label: Image, name: image, widget: image }
+          - label: 'Spotlight'
+            name: 'spotlight'
+            widget: object
+            fields:
+              - { label: Header, name: header, widget: string, default: 'Spotlight' }
+              - { label: Template, name: template, widget: string, default: 'spotlight.html' }
+              - { label: Text, name: text, widget: text, default: 'Hello World' }
